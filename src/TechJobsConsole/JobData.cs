@@ -48,13 +48,37 @@ namespace TechJobsConsole
             foreach (Dictionary<string, string> row in AllJobs)
             {
                 string aValue = row[column];
+                string temp = aValue.ToLower();
 
-                if (aValue.Contains(value))
+                if (temp.Contains(value.ToLower()))
                 {
                     jobs.Add(row);
                 }
             }
+            return jobs;
+        }
+        public static List<Dictionary<string, string>> FindByValue(string value)
+        {
+            LoadData();
+            List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
+           
+            // loop through all jobs
+            foreach (Dictionary<string, string> job in AllJobs)
+            {
+                // check through each column value
+                foreach(string jobVal in job.Values)
+                {
+                    // change column value to all lower case letters
+                    string temp = jobVal.ToLower();
 
+                    // compare lower case column value with converted lower case (input) value
+                    if (temp.Contains(value.ToLower()))
+                    {
+                        jobs.Add(job);
+                        break;  // breakk out of loop once value is found to prevent duplicates 
+                    }
+                }
+            }
             return jobs;
         }
 
